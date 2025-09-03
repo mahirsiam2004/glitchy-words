@@ -1,0 +1,13 @@
+*{
+      font-family: "Poppins", sans-serif;
+}
+
+.font-bangla{
+    font-family: "Hind Siliguri", sans-serif;
+}
+
+#banner{
+    display: flex;
+    justify-content:center;
+    background-color: brown;
+}
