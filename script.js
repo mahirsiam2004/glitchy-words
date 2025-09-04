@@ -4,10 +4,12 @@ const loadLessons = () => {
     .then((json) => displayLessons(json.data));
 };
 
+
 const removeActive = () => {
   const lessonButtons = document.querySelectorAll(".lesson-btn");
   lessonButtons.forEach((btn) => btn.classList.remove("active"));
 };
+
 
 const loadWord = (id) => {
   const url = `https://openapi.programming-hero.com/api/level/${id}`;
@@ -21,6 +23,7 @@ const loadWord = (id) => {
       displayWord(data.data);
     });
 };
+
 
 const displayWord = (words) => {
   const wordContainer = document.getElementById("word-container");
@@ -36,8 +39,10 @@ const displayWord = (words) => {
     return;
   }
 
+
+
   words.forEach((word) => {
-    console.log(word);
+    // console.log(word);
     const card = document.createElement("div");
     card.innerHTML = `        <div class="bg-white rounded-xl shadow-sm text-center py-20 px-5 space-y-4 ">
             <h2 class="font-bold text-xl">${
@@ -48,7 +53,9 @@ const displayWord = (words) => {
               word.meaning ? word.meaning : "অর্থ পাওয়া যায়নি"
             } / ${word.pronunciation ? word.pronunciation : "not found "}</div>
             <div class="flex justify-between items-center">
-                <button class="btn bg-[#1A91FF10] hover:bg-[#1A91FF80]"><i class="fa-solid fa-circle-info"></i></button>
+                <button onclick="loadWordDetails(${
+                  word.id
+                })" class="btn bg-[#1A91FF10] hover:bg-[#1A91FF80]"><i class="fa-solid fa-circle-info"></i></button>
                 <button class="btn bg-[#1A91FF10] hover:bg-[#1A91FF80]""><i class=" fa-solid
                     fa-volume-low"></i></button>
             </div>
@@ -56,6 +63,42 @@ const displayWord = (words) => {
     wordContainer.append(card);
   });
 };
+
+
+  const loadWordDetails = async (id) => {
+    const url = `https://openapi.programming-hero.com/api/word/${id}`;
+    const res = await fetch(url);
+    const details = await res.json();
+    displyDetails(details.data);
+  };
+
+  const displyDetails = (word) => {
+    console.log(word);
+    const detailsBox = document.getElementById("details-container");
+  detailsBox.innerHTML = `
+              <div class="">
+            <h2 class="text=2xl font=bold">${word.word} ( <i class="fa-solid fa-microphone"></i> :${word.pronunciation})</h2>
+        </div>
+        <div class="">
+            <h2 class=" font=bold">Meaning</h2>
+            <p>${word.meaning}</p>
+        </div>
+        <div class="">
+            <h2 class=" font=bold">Example</h2>
+            <p>${word.sentence}</p>
+        </div>
+        <div class="">
+            <h2 class=" font=bold">সমার্থক শব্দ গুলো</h2>
+            <span class="btn">demo</span>
+            <span class="btn">demo</span>
+            <span class="btn">demo</span>
+        </div>
+
+  `
+    document.getElementById("my_modal_5").showModal();
+  };
+
+
 
 const displayLessons = (lessons) => {
   const levelContainer = document.getElementById("level-container");
