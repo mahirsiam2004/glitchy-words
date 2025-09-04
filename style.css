@@ -11,3 +11,8 @@
     justify-content:center;
     background-color: brown;
 }
+
+.active{
+    background-color: #422ad5;
+    color: white;
+}
